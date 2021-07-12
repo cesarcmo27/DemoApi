@@ -13,7 +13,7 @@ namespace API.Controllers
     {
         private readonly ILogger<OrderController> _logger;
 
-    public OrderController(ILogger<OrderController> logger)
+        public OrderController(ILogger<OrderController> logger)
         {
             _logger = logger;
         }
@@ -21,10 +21,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Order>>> GetOrders()
         {
-            _logger.LogInformation("Inicio GetOrders => "+ DateTime.Now);
+            _logger.LogInformation("Inicio GetOrders => " + DateTime.Now);
             var result = await Mediator.Send(new List.Query());
 
-           _logger.LogInformation("Fin GetOrders => "+ DateTime.Now);
+            _logger.LogInformation("Fin GetOrders => " + DateTime.Now);
             return result;
         }
 
