@@ -48,7 +48,59 @@ namespace Persistence
                         }
                     }
                 };
+
                 await context.Order.AddRangeAsync(orderList);
+                await context.SaveChangesAsync();
+
+
+            }
+            if (!context.ItemVendor.Any())
+            {
+
+                var hospital = new Hospital
+                {
+                    Name = "main hospital",
+                    Address = "av 123 st avenue",
+                    Pharmacies = new List<Pharmacy>(){
+                        new Pharmacy
+                         {
+                            Name = "my pharmacy 1",
+                            Address = "another address near my place"
+                        }
+                    }
+                };
+
+
+                var vendor = new ItemVendor
+                {
+                    Name = "Cesar Enterprises",
+                    Address = "av 345 st avenue",
+                    Items = new List<Item>()
+                     {
+                        new Item{
+
+                                UPC = "upc 1",
+                                Description = "item 1",
+                                MinimumOrderQuantity = 5,
+                                PurchaseUnitMeasure = "Tablets",
+                                Cost = 34.56m
+                        },
+                        new Item{
+                            UPC = "upc 2",
+                                Description = "item 2",
+                                MinimumOrderQuantity = 1,
+                                PurchaseUnitMeasure = "Capsule",
+                                Cost = 1.5m
+                        }
+                      }
+                };
+
+
+
+                await context.Hospital.AddAsync(hospital);
+               
+                await context.ItemVendor.AddAsync(vendor);
+
                 await context.SaveChangesAsync();
             }
         }
