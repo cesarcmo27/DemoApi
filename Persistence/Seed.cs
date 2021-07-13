@@ -3,14 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context)
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
 
+            if (!userManager.Users.Any())
+            {
+                 var users = new List<AppUser>
+                {
+                    new AppUser
+                    {
+                        DisplayName = "Cesar Ceron",
+                        UserName = "cesar",
+                        Email = "cesar.ceron@gmail.com"
+                    },
+                    new AppUser
+                    {
+                     
+                        DisplayName = "Fran Moya",
+                        UserName = "fran",
+                        Email = "fran@test.com"
+                    }
+                };
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");//must be strong password
+                }
+            }
 
             if (!context.Order.Any())
             {
@@ -98,7 +122,7 @@ namespace Persistence
 
 
                 await context.Hospital.AddAsync(hospital);
-               
+
                 await context.ItemVendor.AddAsync(vendor);
 
                 await context.SaveChangesAsync();
